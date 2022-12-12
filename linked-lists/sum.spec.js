@@ -5,7 +5,7 @@ import { toLinkedList } from './helpers';
 // Tests
 
 describe.each([[sum]])('%o', (run) => {
-  it('should  properly compute the sum of two linked lists', () => {
+  it('should properly compute the sum of two linked lists', () => {
     fc.assert(
       fc.property(fc.bigUint(), fc.bigUint(), (n1, n2) => {
         const n1List = toLinkedList(
@@ -33,7 +33,7 @@ describe.each([[sum]])('%o', (run) => {
 });
 
 describe.each([[sumReversed]])('%o', (run) => {
-  it('should  properly compute the reversed sum of two linked lists', () => {
+  it('should properly compute the reversed sum of two linked lists', () => {
     fc.assert(
       fc.property(fc.bigUint(), fc.bigUint(), (n1, n2) => {
         const n1List = toLinkedList(
