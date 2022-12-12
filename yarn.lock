@@ -415,6 +415,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "cracking-pbt@workspace:."
   dependencies:
+    fast-check: ^3.4.0
     prettier: ^2.8.1
     vitest: ^0.25.7
   languageName: unknown
@@ -559,6 +560,15 @@ __metadata:
   bin:
     esbuild: bin/esbuild
   checksum: c06e9b2e84f5c7cdb608fa15e5a241d155321097fe1362beab176bc8283f54ae2a9a7fcca741da2663ffb5fea98c6c47226edd22189d3effb14b457e46592d1b
+  languageName: node
+  linkType: hard
+
+"fast-check@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "fast-check@npm:3.4.0"
+  dependencies:
+    pure-rand: ^5.0.2
+  checksum: 6dab50df6973fb03cb8c7ed345f671075d41c84792c531ca3640b722fcd89531ccb3a9f19c80c15fcfa1ca33481e93337d15acafd8668de88ff05bae25959b23
   languageName: node
   linkType: hard
 
@@ -1113,6 +1123,13 @@ __metadata:
     err-code: ^2.0.2
     retry: ^0.12.0
   checksum: f96a3f6d90b92b568a26f71e966cbbc0f63ab85ea6ff6c81284dc869b41510e6cdef99b6b65f9030f0db422bf7c96652a3fff9f2e8fb4a0f069d8f4430359429
+  languageName: node
+  linkType: hard
+
+"pure-rand@npm:^5.0.2":
+  version: 5.0.5
+  resolution: "pure-rand@npm:5.0.5"
+  checksum: 824b906f7f66695c15ed9a898ff650e925723515e999de0360b0726ebad924ce41a74cc2ac60409dc6c55f5781008855f32ecd0fe0a1f40fbce293d48bd11dd1
   languageName: node
   linkType: hard
 
