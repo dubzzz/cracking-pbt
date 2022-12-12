@@ -12,7 +12,7 @@ export function toLinkedList(data) {
 
 export function fromLinkedList(linkedList) {
   const data = [];
-  for (let cursor = linkedList, i = 0; cursor !== undefined; cursor = cursor.next, ++i) {
+  for (let cursor = linkedList; cursor !== undefined; cursor = cursor.next) {
     data.push(cursor.value);
   }
   return data;
