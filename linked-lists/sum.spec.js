@@ -32,6 +32,31 @@ describe.each([[sum]])('%o', (run) => {
   });
 });
 
+describe.each([[sumReversed]])('%o', (run) => {
+  it('should  properly compute the reversed sum of two linked lists', () => {
+    fc.assert(
+      fc.property(fc.bigUint(), fc.bigUint(), (n1, n2) => {
+        const n1List = toLinkedList(
+          String(n1)
+            .split('')
+            .map((v) => +v)
+        );
+        const n2List = toLinkedList(
+          String(n2)
+            .split('')
+            .map((v) => +v)
+        );
+        const sumList = toLinkedList(
+          String(n1 + n2)
+            .split('')
+            .map((v) => +v)
+        );
+        expect(run(n1List, n2List)).toEqual(sumList);
+      })
+    );
+  });
+});
+
 // Implementations
 
 function sum(n1, n2) {
@@ -51,4 +76,22 @@ function sum(n1, n2) {
     sum = sum.next;
   }
   return sumStart.next;
+}
+
+function sumReversed(n1, n2) {
+  // n1 is number of items in n1
+  // n2 is number of items in n2
+  // Average Time Complexity: O(max(n1,n2))
+  // Average Space Complexity: O(max(n1,n2))
+  function reverse(linkedList) {
+    let newLinkedList = undefined;
+    for (let cursor = linkedList, i = 0; cursor !== undefined; cursor = cursor.next, ++i) {
+      const newNode = { value: cursor.value, next: newLinkedList };
+      newLinkedList = newNode;
+    }
+    return newLinkedList;
+  }
+  const rn1 = reverse(n1);
+  const rn2 = reverse(n2);
+  return reverse(sum(rn1, rn2));
 }
