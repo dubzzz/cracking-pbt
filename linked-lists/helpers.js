@@ -9,3 +9,11 @@ export function toLinkedList(data) {
   }
   return rootNode;
 }
+
+export function fromLinkedList(linkedList) {
+  const data = [];
+  for (let cursor = linkedList, i = 0; cursor !== undefined; cursor = cursor.next, ++i) {
+    data.push(cursor.value);
+  }
+  return data;
+}
