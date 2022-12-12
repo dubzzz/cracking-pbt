@@ -85,7 +85,7 @@ function sumReversed(n1, n2) {
   // Average Space Complexity: O(max(n1,n2))
   function reverse(linkedList) {
     let newLinkedList = undefined;
-    for (let cursor = linkedList, i = 0; cursor !== undefined; cursor = cursor.next, ++i) {
+    for (let cursor = linkedList; cursor !== undefined; cursor = cursor.next) {
       const newNode = { value: cursor.value, next: newLinkedList };
       newLinkedList = newNode;
     }
