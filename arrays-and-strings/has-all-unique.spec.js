@@ -25,7 +25,7 @@ describe.each([[hasAllUnique], [hasAllUniqueShortest], [hasAllUniqueWithoutExtra
 // Implementations
 
 function hasAllUnique(input) {
-  // input = n
+  // n is input.length
   // Average Time Complexity: O(n)
   // Average Space Complexity: O(n)
   const alreadySeenCharacters = new Set();
@@ -41,7 +41,7 @@ function hasAllUnique(input) {
 }
 
 function hasAllUniqueShortest(input) {
-  // input = n
+  // n is input.length
   // Average Time Complexity: O(n)
   // Average Space Complexity: O(n)
   const splitInCodePoints = [...input];
@@ -49,7 +49,7 @@ function hasAllUniqueShortest(input) {
 }
 
 function hasAllUniqueWithoutExtraStorage(input) {
-  // input = n
+  // n is input.length
   // Average Time Complexity: O(n**2)
   // Average Space Complexity: O(1)
   function lengthAt(s, index) {

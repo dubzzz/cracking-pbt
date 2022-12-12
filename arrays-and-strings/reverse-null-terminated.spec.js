@@ -32,7 +32,7 @@ describe.each([[reverseNullTerminated]])('%o', (run) => {
 // Implementations
 
 function reverseNullTerminated(input) {
-  // input = n
+  // n is input.length
   // Average Time Complexity: O(n)
   // Average Space Complexity: O(1)
 
