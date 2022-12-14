@@ -56,12 +56,13 @@ describe.each([[buildThreeStacks]])('%o', (run) => {
 // Implementations
 
 function buildThreeStacks(N) {
-  const data = Array(3 * N);
+  const data = Array.from({ length: 3 * N });
 
   function buildOneStack(startIndex) {
     let stackPointer = startIndex; // items are stored within startIndex(included) to stackPointer(excluded)
     return {
       push: (item) => {
+        // Average Time Complexity: O(1)
         if (stackPointer === startIndex + N) {
           throw new Error('Out of memory');
         }
@@ -69,12 +70,13 @@ function buildThreeStacks(N) {
         stackPointer += 1;
       },
       pop: () => {
+        // Average Time Complexity: O(1)
         if (stackPointer === startIndex) {
           throw new Error('Out of memory');
         }
         stackPointer -= 1;
         const item = data[stackPointer];
-        delete data[stackPointer]; // delete possibly harmful for performance
+        data[stackPointer] = undefined;
         return item;
       },
     };
