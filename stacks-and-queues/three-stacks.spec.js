@@ -3,36 +3,7 @@ import fc from 'fast-check';
 
 // Tests
 
-describe.each([[buildThreeStacks]])('%o', (run) => {
-  class PushCommand {
-    constructor(stackIndex, value) {
-      this.stackIndex = stackIndex;
-      this.value = value;
-    }
-    check(m) {
-      return m.stacks[this.stackIndex] < m.maxStackSize;
-    }
-    run(m, r) {
-      m.stacks[this.stackIndex].push(this.value);
-      r[this.stackIndex].push(this.value);
-    }
-    toString = () => `push@${this.stackIndex}(${this.value})`;
-  }
-  class PopCommand {
-    constructor(stackIndex) {
-      this.stackIndex = stackIndex;
-    }
-    check(m) {
-      return m.stacks[this.stackIndex] > 0;
-    }
-    run(m, r) {
-      const outModel = m.stacks[this.stackIndex].pop();
-      const outReal = r[this.stackIndex].pop();
-      expect(outReal).toBe(outModel);
-    }
-    toString = () => `pop@${this.stackIndex}()`;
-  }
-
+describe.each([[buildThreeStacks], [buildResizableThreeStacks]])('%o', (run) => {
   it('should behave like three independent and capped stacks', () => {
     fc.assert(
       fc.property(
@@ -52,6 +23,37 @@ describe.each([[buildThreeStacks]])('%o', (run) => {
     );
   });
 });
+
+// Helpers
+
+class PushCommand {
+  constructor(stackIndex, value) {
+    this.stackIndex = stackIndex;
+    this.value = value;
+  }
+  check(m) {
+    return m.stacks[this.stackIndex] < m.maxStackSize;
+  }
+  run(m, r) {
+    m.stacks[this.stackIndex].push(this.value);
+    r[this.stackIndex].push(this.value);
+  }
+  toString = () => `push@${this.stackIndex}(${this.value})`;
+}
+class PopCommand {
+  constructor(stackIndex) {
+    this.stackIndex = stackIndex;
+  }
+  check(m) {
+    return m.stacks[this.stackIndex] > 0;
+  }
+  run(m, r) {
+    const outModel = m.stacks[this.stackIndex].pop();
+    const outReal = r[this.stackIndex].pop();
+    expect(outReal).toBe(outModel);
+  }
+  toString = () => `pop@${this.stackIndex}()`;
+}
 
 // Implementations
 
@@ -83,4 +85,41 @@ function buildThreeStacks(N) {
   }
 
   return [buildOneStack(0), buildOneStack(N), buildOneStack(2 * N)];
+}
+
+function buildResizableThreeStacks() {
+  let N = 1;
+  let data = Array.from({ length: 3 * N });
+
+  function buildOneResizableStack(stackIndex) {
+    let stackPointer = 0; // items are stored within 0(included) to stackPointer(excluded)
+    return {
+      push: (item) => {
+        // Average Time Complexity: O(1) (amortized)
+        if (stackPointer === N) {
+          const newData = Array.from({ length: 3 * 2 * N }); // Ideally we should avoid crashing and cap total size to 0x7fffffff
+          for (let index = 0; index !== N; ++index) {
+            newData[index] = data[index];
+            newData[index + 2 * N] = data[index + N];
+            newData[index + 4 * N] = data[index + 2 * N];
+          }
+          N *= 2;
+        }
+        data[N * stackIndex + stackPointer] = item;
+        stackPointer += 1;
+      },
+      pop: () => {
+        // Average Time Complexity: O(1)
+        if (stackPointer === 0) {
+          throw new Error('Out of memory');
+        }
+        stackPointer -= 1;
+        const item = data[N * stackIndex + stackPointer];
+        data[N * stackIndex + stackPointer] = undefined;
+        return item;
+      },
+    };
+  }
+
+  return [buildOneResizableStack(0), buildOneResizableStack(1), buildOneResizableStack(2)];
 }
