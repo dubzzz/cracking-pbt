@@ -44,7 +44,7 @@ describe.each([[buildThreeStacks]])('%o', (run) => {
         (N, commands) => {
           const s = () => ({
             model: { stacks: [[], [], []], maxStackSize: N },
-            real: buildThreeStacks(N),
+            real: run(N),
           });
           fc.modelRun(s, commands);
         }
