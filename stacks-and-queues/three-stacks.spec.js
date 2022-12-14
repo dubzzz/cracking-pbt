@@ -7,7 +7,7 @@ describe.each([[buildThreeStacks], [buildResizableThreeStacks]])('%o', (run) => 
   it('should behave like three independent and capped stacks', () => {
     fc.assert(
       fc.property(
-        fc.integer({ min: 1, max: Math.floor(0x7fffffff / 3) }),
+        fc.integer({ min: 1, max: 1000 }), // could be capped at Math.floor(0x7fffffff / 3), but would imply huge allocations
         fc.commands([
           fc.tuple(fc.nat({ max: 2 }), fc.anything()).map(([stackIndex, value]) => new PushCommand(stackIndex, value)),
           fc.nat({ max: 2 }).map((stackIndex) => new PopCommand(stackIndex)),
