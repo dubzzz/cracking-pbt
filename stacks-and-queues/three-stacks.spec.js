@@ -103,6 +103,7 @@ function buildResizableThreeStacks() {
             newData[index + 2 * N] = data[index + N];
             newData[index + 4 * N] = data[index + 2 * N];
           }
+          data = newData;
           N *= 2;
         }
         data[N * stackIndex + stackPointer] = item;
