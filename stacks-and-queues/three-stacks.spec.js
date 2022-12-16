@@ -32,7 +32,7 @@ class PushCommand {
     this.value = value;
   }
   check(m) {
-    return m.stacks[this.stackIndex] < m.maxStackSize;
+    return m.stacks[this.stackIndex].length < m.maxStackSize;
   }
   run(m, r) {
     m.stacks[this.stackIndex].push(this.value);
@@ -45,7 +45,7 @@ class PopCommand {
     this.stackIndex = stackIndex;
   }
   check(m) {
-    return m.stacks[this.stackIndex] > 0;
+    return m.stacks[this.stackIndex].length > 0;
   }
   run(m, r) {
     const outModel = m.stacks[this.stackIndex].pop();

@@ -57,7 +57,7 @@ class PushCommand {
 class PopCommand {
   constructor() {}
   check(m) {
-    return m.data > 0;
+    return m.data.length > 0;
   }
   run(m, r) {
     const outModel = m.data.pop();
@@ -69,7 +69,7 @@ class PopCommand {
 class MinCommand {
   constructor() {}
   check(m) {
-    return m.data > 0;
+    return m.data.length > 0;
   }
   run(m, r) {
     const outModel = Math.min(...m.data);
