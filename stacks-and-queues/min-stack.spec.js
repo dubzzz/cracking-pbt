@@ -52,7 +52,7 @@ class PushCommand {
     m.data.push(this.value);
     r.push(this.value);
   }
-  toString = () => `push(${this.value})`;
+  toString = () => `push(${fc.stringify(this.value)})`;
 }
 class PopCommand {
   constructor() {}

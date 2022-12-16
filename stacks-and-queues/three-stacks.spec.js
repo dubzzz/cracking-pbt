@@ -38,7 +38,7 @@ class PushCommand {
     m.stacks[this.stackIndex].push(this.value);
     r[this.stackIndex].push(this.value);
   }
-  toString = () => `push@${this.stackIndex}(${this.value})`;
+  toString = () => `push@${this.stackIndex}(${fc.stringify(this.value)})`;
 }
 class PopCommand {
   constructor(stackIndex) {
