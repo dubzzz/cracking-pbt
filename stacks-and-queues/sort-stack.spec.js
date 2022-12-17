@@ -3,7 +3,7 @@ import fc from 'fast-check';
 
 // Tests
 
-describe.each([[sortStackBubble], [sortStackInsertion]])('%o', (run) => {
+describe.each([[sortStackBubble], [sortStackInsertion], [sortStackQuick]])('%o', (run) => {
   it('should be able to sort the stack', () => {
     fc.assert(
       fc.property(fc.array(fc.integer()), (data) => {
@@ -81,4 +81,51 @@ function sortStackInsertion(stack) {
       stack.push(bufferStack.pop());
     }
   }
+}
+
+function sortStackQuick(stack) {
+  // n is the number of items in the stack
+  // Average Time Complexity: O(n log n)
+  // Average Space Complexity: O(n)
+
+  const bufferStackLower = []; // for quick sort we need 2 buffer stacks
+  const bufferStackHigher = [];
+
+  function quick(size) {
+    if (size <= 1) {
+      return;
+    }
+    const pivot = stack.pop();
+
+    // Partition the part of the stack we want to sort into our two buffers
+    let numLowerThanPivot = 0;
+    let numHigherThanPivot = 0;
+    for (let num = 1; num !== size; ++num) {
+      const value = stack.pop();
+      if (value <= pivot) {
+        ++numLowerThanPivot;
+        bufferStackLower.push(value);
+      } else {
+        ++numHigherThanPivot;
+        bufferStackHigher.push(value);
+      }
+    }
+
+    // Sort lower than pivot
+    for (let num = 0; num !== numLowerThanPivot; ++num) {
+      stack.push(bufferStackLower.pop());
+    }
+    quick(numLowerThanPivot);
+
+    // Add the pivot
+    stack.push(pivot);
+
+    // Sort higher than pivot
+    for (let num = 0; num !== numHigherThanPivot; ++num) {
+      stack.push(bufferStackHigher.pop());
+    }
+    quick(numHigherThanPivot);
+  }
+
+  quick(stack.length); // .length could be computed easily if needed
 }
