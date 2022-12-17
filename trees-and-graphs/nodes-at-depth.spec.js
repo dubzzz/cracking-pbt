@@ -3,7 +3,7 @@ import fc from 'fast-check';
 
 // Tests
 
-describe.each([[nodesAtDepth]])('%o', (run) => {
+describe.each([[nodesAtDepth], [nodesAtDepthIterative]])('%o', (run) => {
   it('should only have the root node for depth 0', () => {
     fc.assert(
       fc.property(
@@ -23,7 +23,7 @@ describe.each([[nodesAtDepth]])('%o', (run) => {
     );
   });
 
-  it('should associated nodes to the right depth', () => {
+  it('should associate nodes to the right depth', () => {
     fc.assert(
       fc.property(
         fc.letrec((tie) => ({
@@ -80,5 +80,27 @@ function nodesAtDepth(tree) {
     fillNodesAtDepth(tree.right, depth + 1);
   }
   fillNodesAtDepth(tree, 0);
+  return atDepth;
+}
+
+function nodesAtDepthIterative(tree) {
+  // n is the number of nodes in the tree
+  // Average Time Complexity: O(n)
+  // Average Space Complexity: O(n)
+
+  const atDepth = [];
+  const stack = [{ tree, depth: 0 }];
+  while (stack.length !== 0) {
+    const it = stack.pop();
+    if (it.tree === undefined) {
+      continue;
+    }
+    if (atDepth[it.depth] === undefined) {
+      atDepth[it.depth] = [];
+    }
+    atDepth[it.depth].push(it.tree);
+    stack.push({ tree: it.tree.left, depth: it.depth + 1 });
+    stack.push({ tree: it.tree.right, depth: it.depth + 1 });
+  }
   return atDepth;
 }
