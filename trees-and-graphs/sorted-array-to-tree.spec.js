@@ -4,11 +4,11 @@ import fc from 'fast-check';
 // Tests
 
 describe.each([[sortedArrayToTree]])('%o', (run) => {
-  it('should produce a binary tree', () => {
+  it('should produce a binary search tree', () => {
     fc.assert(
       fc.property(fc.uniqueArray(fc.integer(), { minLength: 1 }), (data) => {
         const tree = run([...data].sort((a, b) => a - b));
-        expect(isBinaryTree(tree)).toBe(true);
+        expect(isBinarySearchTree(tree)).toBe(true);
       })
     );
   });
@@ -38,14 +38,14 @@ describe.each([[sortedArrayToTree]])('%o', (run) => {
 
 // Helpers
 
-function isBinaryTree(tree) {
+function isBinarySearchTree(tree) {
   if (tree.left !== undefined) {
     if (tree.left > tree.value) return false;
-    if (!isBinaryTree(tree.left)) return false;
+    if (!isBinarySearchTree(tree.left)) return false;
   }
   if (tree.right !== undefined) {
     if (tree.right <= tree.value) return false;
-    if (!isBinaryTree(tree.right)) return false;
+    if (!isBinarySearchTree(tree.right)) return false;
   }
   return true;
 }
